@@ -1,0 +1,15 @@
+module instruction_mem(clk,rst,pc_out,instr_out);
+input rst,clk;
+input [15:0] pc_out;
+output reg[15:0] instr_out;
+always@(pc_out)begin
+	case(pc_out)
+		0: instr_out=0;
+		1: instr_out=1;
+		2: instr_out=2;
+		3: instr_out=3;
+		4: instr_out=4;
+		5: instr_out=5;
+	endcase
+end
+endmodule

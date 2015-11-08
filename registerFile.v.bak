@@ -1,0 +1,17 @@
+module registerFile(clk,rst);
+input clk,rst;
+//wire port
+input rg_wrt_enable;
+input [2:0] rg_wrt_dest;
+input [15:0] rg_wrt_data;
+//read port1
+input [2:0] rg_rd_add1;
+output [15:0] rg_rd_data1;
+//read port2
+input [2:0] rg_rd_add2;
+output [15:0] rg_rd_data2;
+
+reg [15:0] registers [7:0];
+
+initial registers[0] = 0;
+endmodule

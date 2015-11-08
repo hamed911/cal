@@ -1,0 +1,17 @@
+module controller(opcode,alu_com);
+input [3:0] opcode;
+output reg [2:0] alu_com;
+always@(opcode)begin
+	case(opcode)
+		0: alu_com=3'bx;
+		1: alu_com=0;
+		2: alu_com=1;
+		3: alu_com=2;
+		4: alu_com=3;
+		5: alu_com=4;
+		6: alu_com=5;
+		7: alu_com=6;
+		8: alu_com=7;
+	endcase
+end
+endmodule

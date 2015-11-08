@@ -1,0 +1,3 @@
+module adder(a,b,result);
+assign result = a+b;
+endmodule

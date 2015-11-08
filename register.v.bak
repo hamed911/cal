@@ -1,0 +1,10 @@
+module register(clk,rst,in,out)
+parameter n=15;
+input [n:0] in;
+output reg [n:0] out;
+always@(posedge clk) begin
+	if(rst) out=0;
+	else
+		out=in;
+end
+endmodule

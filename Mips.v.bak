@@ -1,0 +1,11 @@
+module Mips();
+wire [3:0] pc_out,pc_in;
+wire [15:0] inst_out,decode_out,mem_out,wb_out;
+adder add1(1,pc_out,pc_in);
+pc p1(clk,rst,0,pc_in,pc_out);
+instruction_mem ins_mem(clk,rst,pc_out,inst_out);
+decode_execute decoder(clk,rst,inst_out,decode_out);
+execute_mem mem(clk,rst,decode_out,mem_out);
+memory_writeBack wb(clk,rst,mem_out,wb_out);
+clockDivider(inclk,clk);
+endmodule
