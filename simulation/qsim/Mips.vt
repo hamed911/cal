@@ -1,0 +1,366 @@
+// Copyright (C) 1991-2013 Altera Corporation
+// Your use of Altera Corporation's design tools, logic functions 
+// and other software and tools, and its AMPP partner logic 
+// functions, and any output files from any of the foregoing 
+// (including device programming or simulation files), and any 
+// associated documentation or information are expressly subject 
+// to the terms and conditions of the Altera Program License 
+// Subscription Agreement, Altera MegaCore Function License 
+// Agreement, or other applicable license agreement, including, 
+// without limitation, that your use is for the sole purpose of 
+// programming logic devices manufactured by Altera and sold by 
+// Altera or its authorized distributors.  Please refer to the 
+// applicable agreement for further details.
+
+// *****************************************************************************
+// This file contains a Verilog test bench with test vectors .The test vectors  
+// are exported from a vector file in the Quartus Waveform Editor and apply to  
+// the top level entity of the current Quartus project .The user can use this   
+// testbench to simulate his design using a third-party simulation tool .       
+// *****************************************************************************
+// Generated on "11/11/2015 10:48:37"
+                                                                        
+// Verilog Self-Checking Test Bench (with test vectors) for design :    hazard_detection
+// 
+// Simulation tool : 3rd Party
+// 
+
+`timescale 1 ps/ 1 ps
+module hazard_detection_vlg_sample_tst(
+	opcode,
+	r1_decode,
+	r2_decode,
+	w_decode,
+	w_exec,
+	w_mem,
+	w_wb,
+	sampler_tx
+);
+input [3:0] opcode;
+input [2:0] r1_decode;
+input [2:0] r2_decode;
+input [2:0] w_decode;
+input [2:0] w_exec;
+input [2:0] w_mem;
+input [2:0] w_wb;
+output sampler_tx;
+
+reg sample;
+time current_time;
+always @(opcode or r1_decode or r2_decode or w_decode or w_exec or w_mem or w_wb)
+                                                                                
+begin                                                 
+ if ($realtime > 0)                                   
+ begin                                                
+	if ($realtime == 0 || $realtime != current_time)  
+	begin									          
+		if (sample === 1'bx)                          
+			sample = 0;                               
+		else                                          
+			sample = ~sample;                         
+	end										          
+	current_time = $realtime;					      
+ end                                                  
+end                                                   
+
+assign sampler_tx = sample;
+endmodule
+
+module hazard_detection_vlg_check_tst (
+	stall,
+	sampler_rx
+);
+input  stall;
+input sampler_rx;
+
+reg  stall_expected;
+
+reg  stall_prev;
+
+reg  stall_expected_prev;
+
+reg  last_stall_exp;
+
+reg trigger;
+
+integer i;
+integer nummismatches;
+
+reg [1:1] on_first_change ;
+
+
+initial
+begin
+trigger = 0;
+i = 0;
+nummismatches = 0;
+on_first_change = 1'b1;
+end
+
+// update real /o prevs
+
+always @(trigger)
+begin
+	stall_prev = stall;
+end
+
+// update expected /o prevs
+
+always @(trigger)
+begin
+	stall_expected_prev = stall_expected;
+end
+
+
+
+// expected stall
+initial
+begin
+	stall_expected = 1'bX;
+end 
+// generate trigger
+always @(stall_expected or stall)
+begin
+	trigger <= ~trigger;
+end
+
+always @(posedge sampler_rx or negedge sampler_rx)
+begin
+`ifdef debug_tbench
+	$display("Scanning pattern %d @time = %t",i,$realtime );
+	i = i + 1;
+	$display("| expected stall = %b | ",stall_expected_prev);
+	$display("| real stall = %b | ",stall_prev);
+`endif
+	if (
+		( stall_expected_prev !== 1'bx ) && ( stall_prev !== stall_expected_prev )
+		&& ((stall_expected_prev !== last_stall_exp) ||
+			on_first_change[1])
+	)
+	begin
+		$display ("ERROR! Vector Mismatch for output port stall :: @time = %t",  $realtime);
+		$display ("     Expected value = %b", stall_expected_prev);
+		$display ("     Real value = %b", stall_prev);
+		nummismatches = nummismatches + 1;
+		on_first_change[1] = 1'b0;
+		last_stall_exp = stall_expected_prev;
+	end
+
+	trigger <= ~trigger;
+end
+initial 
+
+begin 
+$timeformat(-12,3," ps",6);
+#1000000;
+if (nummismatches > 0)
+	$display ("%d mismatched vectors : Simulation failed !",nummismatches);
+else
+	$display ("Simulation passed !");
+$finish;
+end 
+endmodule
+
+module hazard_detection_vlg_vec_tst();
+// constants                                           
+// general purpose registers
+reg [3:0] opcode;
+reg [2:0] r1_decode;
+reg [2:0] r2_decode;
+reg [2:0] w_decode;
+reg [2:0] w_exec;
+reg [2:0] w_mem;
+reg [2:0] w_wb;
+// wires                                               
+wire stall;
+
+wire sampler;                             
+
+// assign statements (if any)                          
+hazard_detection i1 (
+// port map - connection between master ports and signals/registers   
+	.opcode(opcode),
+	.r1_decode(r1_decode),
+	.r2_decode(r2_decode),
+	.stall(stall),
+	.w_decode(w_decode),
+	.w_exec(w_exec),
+	.w_mem(w_mem),
+	.w_wb(w_wb)
+);
+// opcode[ 3 ]
+initial
+begin
+	opcode[3] = 1'b0;
+	opcode[3] = #170000 1'b1;
+	opcode[3] = #140000 1'b0;
+	opcode[3] = #60000 1'b1;
+	opcode[3] = #160000 1'b0;
+end 
+// opcode[ 2 ]
+initial
+begin
+	opcode[2] = 1'b0;
+end 
+// opcode[ 1 ]
+initial
+begin
+	opcode[1] = 1'b0;
+	opcode[1] = #20000 1'b1;
+	opcode[1] = #80000 1'b0;
+	opcode[1] = #70000 1'b1;
+	opcode[1] = #140000 1'b0;
+end 
+// opcode[ 0 ]
+initial
+begin
+	opcode[0] = 1'b0;
+	opcode[0] = #170000 1'b1;
+	opcode[0] = #140000 1'b0;
+	opcode[0] = #60000 1'b1;
+	opcode[0] = #160000 1'b0;
+end 
+// r1_decode[ 2 ]
+initial
+begin
+	r1_decode[2] = 1'b0;
+end 
+// r1_decode[ 1 ]
+initial
+begin
+	r1_decode[1] = 1'b0;
+	r1_decode[1] = #20000 1'b1;
+	r1_decode[1] = #30000 1'b0;
+	r1_decode[1] = #410000 1'b1;
+	r1_decode[1] = #50000 1'b0;
+end 
+// r1_decode[ 0 ]
+initial
+begin
+	r1_decode[0] = 1'b0;
+	r1_decode[0] = #20000 1'b1;
+	r1_decode[0] = #30000 1'b0;
+end 
+// r2_decode[ 2 ]
+initial
+begin
+	r2_decode[2] = 1'b0;
+	r2_decode[2] = #50000 1'b1;
+	r2_decode[2] = #40000 1'b0;
+	r2_decode[2] = #280000 1'b1;
+	r2_decode[2] = #60000 1'b0;
+end 
+// r2_decode[ 1 ]
+initial
+begin
+	r2_decode[1] = 1'b0;
+end 
+// r2_decode[ 0 ]
+initial
+begin
+	r2_decode[0] = 1'b0;
+	r2_decode[0] = #50000 1'b1;
+	r2_decode[0] = #40000 1'b0;
+end 
+// w_decode[ 2 ]
+initial
+begin
+	w_decode[2] = 1'b0;
+	w_decode[2] = #210000 1'b1;
+	w_decode[2] = #50000 1'b0;
+end 
+// w_decode[ 1 ]
+initial
+begin
+	w_decode[1] = 1'b0;
+	w_decode[1] = #210000 1'b1;
+	w_decode[1] = #50000 1'b0;
+	w_decode[1] = #150000 1'b1;
+	w_decode[1] = #70000 1'b0;
+end 
+// w_decode[ 0 ]
+initial
+begin
+	w_decode[0] = 1'b0;
+	w_decode[0] = #210000 1'b1;
+	w_decode[0] = #50000 1'b0;
+end 
+// w_exec[ 2 ]
+initial
+begin
+	w_exec[2] = 1'b0;
+	w_exec[2] = #20000 1'b1;
+	w_exec[2] = #110000 1'b0;
+	w_exec[2] = #230000 1'b1;
+	w_exec[2] = #40000 1'b0;
+end 
+// w_exec[ 1 ]
+initial
+begin
+	w_exec[1] = 1'b0;
+end 
+// w_exec[ 0 ]
+initial
+begin
+	w_exec[0] = 1'b0;
+	w_exec[0] = #20000 1'b1;
+	w_exec[0] = #110000 1'b0;
+end 
+// w_mem[ 2 ]
+initial
+begin
+	w_mem[2] = 1'b0;
+end 
+// w_mem[ 1 ]
+initial
+begin
+	w_mem[1] = 1'b0;
+	w_mem[1] = #10000 1'b1;
+	w_mem[1] = #80000 1'b0;
+end 
+// w_mem[ 0 ]
+initial
+begin
+	w_mem[0] = 1'b0;
+	w_mem[0] = #10000 1'b1;
+	w_mem[0] = #80000 1'b0;
+end 
+// w_wb[ 2 ]
+initial
+begin
+	w_wb[2] = 1'b0;
+	w_wb[2] = #170000 1'b1;
+	w_wb[2] = #70000 1'b0;
+end 
+// w_wb[ 1 ]
+initial
+begin
+	w_wb[1] = 1'b0;
+	w_wb[1] = #170000 1'b1;
+	w_wb[1] = #70000 1'b0;
+end 
+// w_wb[ 0 ]
+initial
+begin
+	w_wb[0] = 1'b0;
+	w_wb[0] = #170000 1'b1;
+	w_wb[0] = #70000 1'b0;
+end 
+
+hazard_detection_vlg_sample_tst tb_sample (
+	.opcode(opcode),
+	.r1_decode(r1_decode),
+	.r2_decode(r2_decode),
+	.w_decode(w_decode),
+	.w_exec(w_exec),
+	.w_mem(w_mem),
+	.w_wb(w_wb),
+	.sampler_tx(sampler)
+);
+
+hazard_detection_vlg_check_tst tb_out(
+	.stall(stall),
+	.sampler_rx(sampler)
+);
+endmodule
+
