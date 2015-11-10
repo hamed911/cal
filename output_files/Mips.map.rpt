@@ -1,5 +1,5 @@
 Analysis & Synthesis report for Mips
-Thu Oct 29 07:19:48 2015
+Thu Nov  5 07:45:53 2015
 Quartus II 64-Bit Version 13.0.1 Build 232 06/12/2013 Service Pack 1 SJ Full Version
 
 
@@ -15,21 +15,26 @@ Quartus II 64-Bit Version 13.0.1 Build 232 06/12/2013 Service Pack 1 SJ Full Ver
   7. Analysis & Synthesis Resource Utilization by Entity
   8. User-Specified and Inferred Latches
   9. Registers Removed During Synthesis
- 10. General Register Statistics
- 11. Inverted Register Statistics
- 12. Multiplexer Restructuring Statistics (Restructuring Performed)
- 13. Parameter Settings for User Entity Instance: MUX:pc_mux
- 14. Parameter Settings for User Entity Instance: register:id_ex
- 15. Parameter Settings for User Entity Instance: register:ex_mem
- 16. Parameter Settings for User Entity Instance: register:mem_wb
- 17. Port Connectivity Checks: "sevenSegment:s6"
- 18. Port Connectivity Checks: "sevenSegment:s3"
- 19. Port Connectivity Checks: "sevenSegment:s2"
- 20. Port Connectivity Checks: "registerFile:regFile"
- 21. Port Connectivity Checks: "pc:p1"
- 22. Port Connectivity Checks: "adder:add1"
- 23. Elapsed Time Per Partition
- 24. Analysis & Synthesis Messages
+ 10. Removed Registers Triggering Further Register Optimizations
+ 11. General Register Statistics
+ 12. Inverted Register Statistics
+ 13. Multiplexer Restructuring Statistics (Restructuring Performed)
+ 14. Parameter Settings for User Entity Instance: MUX:pc_mux
+ 15. Parameter Settings for User Entity Instance: MUX:reg2mux
+ 16. Parameter Settings for User Entity Instance: register:id_ex
+ 17. Parameter Settings for User Entity Instance: MUX:aluMux
+ 18. Parameter Settings for User Entity Instance: register:ex_mem
+ 19. Parameter Settings for User Entity Instance: register:mem_wb
+ 20. Parameter Settings for User Entity Instance: MUX:wb_mux
+ 21. Port Connectivity Checks: "sevenSegment:s3"
+ 22. Port Connectivity Checks: "sevenSegment:s2"
+ 23. Port Connectivity Checks: "dataMemory:mem"
+ 24. Port Connectivity Checks: "registerFile:regFile"
+ 25. Port Connectivity Checks: "MUX:reg2mux"
+ 26. Port Connectivity Checks: "pc:p1"
+ 27. Port Connectivity Checks: "adder:add1"
+ 28. Elapsed Time Per Partition
+ 29. Analysis & Synthesis Messages
 
 
 
@@ -55,16 +60,16 @@ applicable agreement for further details.
 +---------------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                          ;
 +------------------------------------+--------------------------------------------------+
-; Analysis & Synthesis Status        ; Successful - Thu Oct 29 07:19:48 2015            ;
+; Analysis & Synthesis Status        ; Successful - Thu Nov  5 07:45:53 2015            ;
 ; Quartus II 64-Bit Version          ; 13.0.1 Build 232 06/12/2013 SP 1 SJ Full Version ;
 ; Revision Name                      ; Mips                                             ;
 ; Top-level Entity Name              ; Mips                                             ;
 ; Family                             ; Cyclone II                                       ;
-; Total logic elements               ; 732                                              ;
-;     Total combinational functions  ; 598                                              ;
-;     Dedicated logic registers      ; 220                                              ;
-; Total registers                    ; 220                                              ;
-; Total pins                         ; 97                                               ;
+; Total logic elements               ; 840                                              ;
+;     Total combinational functions  ; 682                                              ;
+;     Dedicated logic registers      ; 264                                              ;
+; Total registers                    ; 264                                              ;
+; Total pins                         ; 105                                              ;
 ; Total virtual pins                 ; 0                                                ;
 ; Total memory bits                  ; 0                                                ;
 ; Embedded Multiplier 9-bit elements ; 0                                                ;
@@ -191,6 +196,7 @@ applicable agreement for further details.
 ; register.v                       ; yes             ; User Verilog HDL File  ; /opt/altera/13.0sp1/Mips/register.v        ;         ;
 ; MUX.v                            ; yes             ; User Verilog HDL File  ; /opt/altera/13.0sp1/Mips/MUX.v             ;         ;
 ; sign_extend.v                    ; yes             ; User Verilog HDL File  ; /opt/altera/13.0sp1/Mips/sign_extend.v     ;         ;
+; dataMemory.v                     ; yes             ; User Verilog HDL File  ; /opt/altera/13.0sp1/Mips/dataMemory.v      ;         ;
 +----------------------------------+-----------------+------------------------+--------------------------------------------+---------+
 
 
@@ -199,28 +205,28 @@ applicable agreement for further details.
 +---------------------------------------------+--------+
 ; Resource                                    ; Usage  ;
 +---------------------------------------------+--------+
-; Estimated Total logic elements              ; 732    ;
+; Estimated Total logic elements              ; 840    ;
 ;                                             ;        ;
-; Total combinational functions               ; 598    ;
+; Total combinational functions               ; 682    ;
 ; Logic element usage by number of LUT inputs ;        ;
-;     -- 4 input functions                    ; 300    ;
-;     -- 3 input functions                    ; 237    ;
-;     -- <=2 input functions                  ; 61     ;
+;     -- 4 input functions                    ; 374    ;
+;     -- 3 input functions                    ; 287    ;
+;     -- <=2 input functions                  ; 21     ;
 ;                                             ;        ;
 ; Logic elements by mode                      ;        ;
-;     -- normal mode                          ; 539    ;
-;     -- arithmetic mode                      ; 59     ;
+;     -- normal mode                          ; 637    ;
+;     -- arithmetic mode                      ; 45     ;
 ;                                             ;        ;
-; Total registers                             ; 220    ;
-;     -- Dedicated logic registers            ; 220    ;
+; Total registers                             ; 264    ;
+;     -- Dedicated logic registers            ; 264    ;
 ;     -- I/O registers                        ; 0      ;
 ;                                             ;        ;
-; I/O pins                                    ; 97     ;
+; I/O pins                                    ; 105    ;
 ; Embedded Multiplier 9-bit elements          ; 0      ;
 ; Maximum fan-out node                        ; KEY[1] ;
-; Maximum fan-out                             ; 220    ;
-; Total fan-out                               ; 2826   ;
-; Average fan-out                             ; 3.09   ;
+; Maximum fan-out                             ; 264    ;
+; Total fan-out                               ; 3329   ;
+; Average fan-out                             ; 3.17   ;
 +---------------------------------------------+--------+
 
 
@@ -229,24 +235,25 @@ applicable agreement for further details.
 +------------------------------+-------------------+--------------+-------------+--------------+---------+-----------+------+--------------+-------------------------------+--------------+
 ; Compilation Hierarchy Node   ; LC Combinationals ; LC Registers ; Memory Bits ; DSP Elements ; DSP 9x9 ; DSP 18x18 ; Pins ; Virtual Pins ; Full Hierarchy Name           ; Library Name ;
 +------------------------------+-------------------+--------------+-------------+--------------+---------+-----------+------+--------------+-------------------------------+--------------+
-; |Mips                        ; 598 (13)          ; 220 (0)      ; 0           ; 0            ; 0       ; 0         ; 97   ; 0            ; |Mips                         ; work         ;
-;    |ALU:alu|                 ; 234 (234)         ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |Mips|ALU:alu                 ; work         ;
-;    |MUX:pc_mux|              ; 15 (15)           ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |Mips|MUX:pc_mux              ; work         ;
-;    |adder:add1|              ; 16 (16)           ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |Mips|adder:add1              ; work         ;
-;    |adder:add_offset|        ; 15 (15)           ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |Mips|adder:add_offset        ; work         ;
-;    |controller:control|      ; 14 (14)           ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |Mips|controller:control      ; work         ;
-;    |fetch_id_reg:fe_id_reg|  ; 0 (0)             ; 13 (13)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |Mips|fetch_id_reg:fe_id_reg  ; work         ;
-;    |instruction_mem:ins_mem| ; 29 (29)           ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |Mips|instruction_mem:ins_mem ; work         ;
-;    |pc:p1|                   ; 1 (1)             ; 16 (16)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |Mips|pc:p1                   ; work         ;
-;    |register:ex_mem|         ; 17 (17)           ; 20 (20)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |Mips|register:ex_mem         ; work         ;
-;    |register:id_ex|          ; 0 (0)             ; 39 (39)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |Mips|register:id_ex          ; work         ;
-;    |register:mem_wb|         ; 0 (0)             ; 20 (20)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |Mips|register:mem_wb         ; work         ;
-;    |registerFile:regFile|    ; 142 (142)         ; 112 (112)    ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |Mips|registerFile:regFile    ; work         ;
-;    |sevenSegment:s1|         ; 15 (15)           ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |Mips|sevenSegment:s1         ; work         ;
-;    |sevenSegment:s2|         ; 4 (4)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |Mips|sevenSegment:s2         ; work         ;
+; |Mips                        ; 682 (15)          ; 264 (0)      ; 0           ; 0            ; 0       ; 0         ; 105  ; 0            ; |Mips                         ; work         ;
+;    |ALU:alu|                 ; 242 (242)         ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |Mips|ALU:alu                 ; work         ;
+;    |MUX:aluMux|              ; 16 (16)           ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |Mips|MUX:aluMux              ; work         ;
+;    |MUX:reg2mux|             ; 3 (3)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |Mips|MUX:reg2mux             ; work         ;
+;    |MUX:wb_mux|              ; 16 (16)           ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |Mips|MUX:wb_mux              ; work         ;
+;    |adder:add1|              ; 6 (6)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |Mips|adder:add1              ; work         ;
+;    |controller:control|      ; 18 (18)           ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |Mips|controller:control      ; work         ;
+;    |fetch_id_reg:fe_id_reg|  ; 0 (0)             ; 15 (15)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |Mips|fetch_id_reg:fe_id_reg  ; work         ;
+;    |instruction_mem:ins_mem| ; 47 (47)           ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |Mips|instruction_mem:ins_mem ; work         ;
+;    |pc:p1|                   ; 16 (16)           ; 16 (16)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |Mips|pc:p1                   ; work         ;
+;    |register:ex_mem|         ; 15 (15)           ; 37 (37)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |Mips|register:ex_mem         ; work         ;
+;    |register:id_ex|          ; 4 (4)             ; 47 (47)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |Mips|register:id_ex          ; work         ;
+;    |register:mem_wb|         ; 0 (0)             ; 37 (37)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |Mips|register:mem_wb         ; work         ;
+;    |registerFile:regFile|    ; 178 (178)         ; 112 (112)    ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |Mips|registerFile:regFile    ; work         ;
+;    |sevenSegment:s1|         ; 14 (14)           ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |Mips|sevenSegment:s1         ; work         ;
+;    |sevenSegment:s2|         ; 8 (8)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |Mips|sevenSegment:s2         ; work         ;
 ;    |sevenSegment:s3|         ; 8 (8)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |Mips|sevenSegment:s3         ; work         ;
 ;    |sevenSegment:s4|         ; 15 (15)           ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |Mips|sevenSegment:s4         ; work         ;
-;    |sevenSegment:s5|         ; 15 (15)           ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |Mips|sevenSegment:s5         ; work         ;
+;    |sevenSegment:s5|         ; 16 (16)           ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |Mips|sevenSegment:s5         ; work         ;
 ;    |sevenSegment:s6|         ; 15 (15)           ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |Mips|sevenSegment:s6         ; work         ;
 ;    |sevenSegment:s7|         ; 15 (15)           ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |Mips|sevenSegment:s7         ; work         ;
 ;    |sevenSegment:s8|         ; 15 (15)           ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |Mips|sevenSegment:s8         ; work         ;
@@ -301,11 +308,13 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 ; sevenSegment:s8|bits[4]                             ; sevenSegment:s8|Mux7             ; yes                    ;
 ; sevenSegment:s8|bits[5]                             ; sevenSegment:s8|Mux7             ; yes                    ;
 ; sevenSegment:s8|bits[6]                             ; sevenSegment:s8|Mux7             ; yes                    ;
+; instruction_mem:ins_mem|instr_out[0]                ; instruction_mem:ins_mem|WideNor0 ; yes                    ;
 ; instruction_mem:ins_mem|instr_out[1]                ; instruction_mem:ins_mem|WideNor0 ; yes                    ;
 ; instruction_mem:ins_mem|instr_out[2]                ; instruction_mem:ins_mem|WideNor0 ; yes                    ;
 ; instruction_mem:ins_mem|instr_out[3]                ; instruction_mem:ins_mem|WideNor0 ; yes                    ;
 ; instruction_mem:ins_mem|instr_out[4]                ; instruction_mem:ins_mem|WideNor0 ; yes                    ;
 ; instruction_mem:ins_mem|instr_out[5]                ; instruction_mem:ins_mem|WideNor0 ; yes                    ;
+; instruction_mem:ins_mem|instr_out[6]                ; instruction_mem:ins_mem|WideNor0 ; yes                    ;
 ; instruction_mem:ins_mem|instr_out[7]                ; instruction_mem:ins_mem|WideNor0 ; yes                    ;
 ; instruction_mem:ins_mem|instr_out[8]                ; instruction_mem:ins_mem|WideNor0 ; yes                    ;
 ; instruction_mem:ins_mem|instr_out[9]                ; instruction_mem:ins_mem|WideNor0 ; yes                    ;
@@ -315,23 +324,34 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 ; instruction_mem:ins_mem|instr_out[13]               ; instruction_mem:ins_mem|WideNor0 ; yes                    ;
 ; instruction_mem:ins_mem|instr_out[14]               ; instruction_mem:ins_mem|WideNor0 ; yes                    ;
 ; instruction_mem:ins_mem|instr_out[15]               ; instruction_mem:ins_mem|WideNor0 ; yes                    ;
-; controller:control|alu_com[0]                       ; controller:control|Mux3          ; yes                    ;
-; controller:control|alu_com[2]                       ; controller:control|Mux3          ; yes                    ;
-; controller:control|alu_com[1]                       ; controller:control|Mux3          ; yes                    ;
-; Number of user-specified and inferred latches = 59  ;                                  ;                        ;
+; controller:control|alu_com[0]                       ; controller:control|LessThan1     ; yes                    ;
+; controller:control|alu_com[2]                       ; controller:control|LessThan1     ; yes                    ;
+; controller:control|alu_com[1]                       ; controller:control|LessThan1     ; yes                    ;
+; Number of user-specified and inferred latches = 61  ;                                  ;                        ;
 +-----------------------------------------------------+----------------------------------+------------------------+
 Note: All latches listed above may not be present at the end of synthesis due to various synthesis optimizations.
 
 
-+-----------------------------------------------------------------------------------------------+
-; Registers Removed During Synthesis                                                            ;
-+------------------------------------------+----------------------------------------------------+
-; Register name                            ; Reason for Removal                                 ;
-+------------------------------------------+----------------------------------------------------+
-; fetch_id_reg:fe_id_reg|inst_out_reg[0,6] ; Stuck at GND due to stuck port data_in             ;
-; fetch_id_reg:fe_id_reg|inst_out_reg[2]   ; Merged with fetch_id_reg:fe_id_reg|inst_out_reg[5] ;
-; Total Number of Removed Registers = 3    ;                                                    ;
-+------------------------------------------+----------------------------------------------------+
++---------------------------------------------------------------------------------------------+
+; Registers Removed During Synthesis                                                          ;
++----------------------------------------+----------------------------------------------------+
+; Register name                          ; Reason for Removal                                 ;
++----------------------------------------+----------------------------------------------------+
+; register:id_ex|out[44..53]             ; Merged with register:id_ex|out[54]                 ;
+; register:ex_mem|out[36]                ; Lost fanout                                        ;
+; register:id_ex|out[56]                 ; Lost fanout                                        ;
+; fetch_id_reg:fe_id_reg|inst_out_reg[2] ; Merged with fetch_id_reg:fe_id_reg|inst_out_reg[6] ;
+; Total Number of Removed Registers = 13 ;                                                    ;
++----------------------------------------+----------------------------------------------------+
+
+
++---------------------------------------------------------------------------------------+
+; Removed Registers Triggering Further Register Optimizations                           ;
++-------------------------+--------------------+----------------------------------------+
+; Register name           ; Reason for Removal ; Registers Removed due to This Register ;
++-------------------------+--------------------+----------------------------------------+
+; register:ex_mem|out[36] ; Lost Fanouts       ; register:id_ex|out[56]                 ;
++-------------------------+--------------------+----------------------------------------+
 
 
 +------------------------------------------------------+
@@ -339,10 +359,10 @@ Note: All latches listed above may not be present at the end of synthesis due to
 +----------------------------------------------+-------+
 ; Statistic                                    ; Value ;
 +----------------------------------------------+-------+
-; Total registers                              ; 220   ;
+; Total registers                              ; 264   ;
 ; Number of registers using Synchronous Clear  ; 0     ;
 ; Number of registers using Synchronous Load   ; 2     ;
-; Number of registers using Asynchronous Clear ; 172   ;
+; Number of registers using Asynchronous Clear ; 216   ;
 ; Number of registers using Asynchronous Load  ; 0     ;
 ; Number of registers using Clock Enable       ; 112   ;
 ; Number of registers using Preset             ; 0     ;
@@ -356,9 +376,9 @@ Note: All latches listed above may not be present at the end of synthesis due to
 +----------------------------------------+---------+
 ; registerFile:regFile|registers[4][2]   ; 3       ;
 ; registerFile:regFile|registers[2][1]   ; 3       ;
-; registerFile:regFile|registers[3][0]   ; 2       ;
-; registerFile:regFile|registers[1][0]   ; 2       ;
-; registerFile:regFile|registers[3][1]   ; 2       ;
+; registerFile:regFile|registers[3][1]   ; 3       ;
+; registerFile:regFile|registers[3][0]   ; 3       ;
+; registerFile:regFile|registers[1][0]   ; 3       ;
 ; Total number of inverted registers = 5 ;         ;
 +----------------------------------------+---------+
 
@@ -368,15 +388,14 @@ Note: All latches listed above may not be present at the end of synthesis due to
 +--------------------+-----------+---------------+----------------------+------------------------+------------+----------------------------------+
 ; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output       ;
 +--------------------+-----------+---------------+----------------------+------------------------+------------+----------------------------------+
-; 8:1                ; 12 bits   ; 60 LEs        ; 60 LEs               ; 0 LEs                  ; Yes        ; |Mips|register:id_ex|out[15]     ;
-; 12:1               ; 4 bits    ; 32 LEs        ; 24 LEs               ; 8 LEs                  ; Yes        ; |Mips|register:ex_mem|out[11]    ;
-; 12:1               ; 4 bits    ; 32 LEs        ; 24 LEs               ; 8 LEs                  ; Yes        ; |Mips|register:ex_mem|out[13]    ;
-; 13:1               ; 2 bits    ; 16 LEs        ; 14 LEs               ; 2 LEs                  ; Yes        ; |Mips|register:ex_mem|out[7]     ;
-; 13:1               ; 2 bits    ; 16 LEs        ; 14 LEs               ; 2 LEs                  ; Yes        ; |Mips|register:ex_mem|out[17]    ;
+; 8:1                ; 16 bits   ; 80 LEs        ; 80 LEs               ; 0 LEs                  ; Yes        ; |Mips|register:id_ex|out[4]      ;
+; 12:1               ; 4 bits    ; 32 LEs        ; 24 LEs               ; 8 LEs                  ; Yes        ; |Mips|register:ex_mem|out[8]     ;
+; 12:1               ; 4 bits    ; 32 LEs        ; 24 LEs               ; 8 LEs                  ; Yes        ; |Mips|register:ex_mem|out[14]    ;
+; 13:1               ; 2 bits    ; 16 LEs        ; 14 LEs               ; 2 LEs                  ; Yes        ; |Mips|register:ex_mem|out[6]     ;
+; 13:1               ; 2 bits    ; 16 LEs        ; 14 LEs               ; 2 LEs                  ; Yes        ; |Mips|register:ex_mem|out[16]    ;
 ; 14:1               ; 2 bits    ; 18 LEs        ; 16 LEs               ; 2 LEs                  ; Yes        ; |Mips|register:ex_mem|out[18]    ;
-; 4:1                ; 16 bits   ; 32 LEs        ; 32 LEs               ; 0 LEs                  ; No         ; |Mips|registerFile:regFile|Mux0  ;
-; 8:1                ; 4 bits    ; 20 LEs        ; 16 LEs               ; 4 LEs                  ; No         ; |Mips|registerFile:regFile|Mux28 ;
-; 8:1                ; 4 bits    ; 20 LEs        ; 16 LEs               ; 4 LEs                  ; No         ; |Mips|registerFile:regFile|Mux45 ;
+; 8:1                ; 16 bits   ; 80 LEs        ; 64 LEs               ; 16 LEs                 ; No         ; |Mips|registerFile:regFile|Mux1  ;
+; 8:1                ; 4 bits    ; 20 LEs        ; 16 LEs               ; 4 LEs                  ; No         ; |Mips|registerFile:regFile|Mux47 ;
 +--------------------+-----------+---------------+----------------------+------------------------+------------+----------------------------------+
 
 
@@ -390,13 +409,33 @@ Note: All latches listed above may not be present at the end of synthesis due to
 Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
 
 
++----------------------------------------------------------+
+; Parameter Settings for User Entity Instance: MUX:reg2mux ;
++----------------+-------+---------------------------------+
+; Parameter Name ; Value ; Type                            ;
++----------------+-------+---------------------------------+
+; n              ; 16    ; Signed Integer                  ;
++----------------+-------+---------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
 +-------------------------------------------------------------+
 ; Parameter Settings for User Entity Instance: register:id_ex ;
 +----------------+-------+------------------------------------+
 ; Parameter Name ; Value ; Type                               ;
 +----------------+-------+------------------------------------+
-; n              ; 39    ; Signed Integer                     ;
+; n              ; 58    ; Signed Integer                     ;
 +----------------+-------+------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++---------------------------------------------------------+
+; Parameter Settings for User Entity Instance: MUX:aluMux ;
++----------------+-------+--------------------------------+
+; Parameter Name ; Value ; Type                           ;
++----------------+-------+--------------------------------+
+; n              ; 16    ; Signed Integer                 ;
++----------------+-------+--------------------------------+
 Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
 
 
@@ -405,7 +444,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 +----------------+-------+-------------------------------------+
 ; Parameter Name ; Value ; Type                                ;
 +----------------+-------+-------------------------------------+
-; n              ; 20    ; Signed Integer                      ;
+; n              ; 38    ; Signed Integer                      ;
 +----------------+-------+-------------------------------------+
 Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
 
@@ -415,27 +454,28 @@ Note: In order to hide this table in the UI and the text report file, please set
 +----------------+-------+-------------------------------------+
 ; Parameter Name ; Value ; Type                                ;
 +----------------+-------+-------------------------------------+
-; n              ; 20    ; Signed Integer                      ;
+; n              ; 37    ; Signed Integer                      ;
 +----------------+-------+-------------------------------------+
 Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
 
 
-+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; Port Connectivity Checks: "sevenSegment:s6"                                                                                                                                                                    ;
-+--------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; Port   ; Type  ; Severity ; Details                                                                                                                                                                            ;
-+--------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; number ; Input ; Warning  ; Input port expression (16 bits) is wider than the input port (4 bits) it drives.  The 12 most-significant bit(s) in the expression will be dangling if they have no other fanouts. ;
-+--------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
++---------------------------------------------------------+
+; Parameter Settings for User Entity Instance: MUX:wb_mux ;
++----------------+-------+--------------------------------+
+; Parameter Name ; Value ; Type                           ;
++----------------+-------+--------------------------------+
+; n              ; 16    ; Signed Integer                 ;
++----------------+-------+--------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
 
 
-+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; Port Connectivity Checks: "sevenSegment:s3"                                                                                                                                ;
-+--------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
-; Port   ; Type  ; Severity ; Details                                                                                                                                        ;
-+--------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
-; number ; Input ; Warning  ; Input port expression (3 bits) is smaller than the input port (4 bits) it drives.  Extra input bit(s) "number[3..3]" will be connected to GND. ;
-+--------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
++---------------------------------------------+
+; Port Connectivity Checks: "sevenSegment:s3" ;
++-----------+-------+----------+--------------+
+; Port      ; Type  ; Severity ; Details      ;
++-----------+-------+----------+--------------+
+; number[3] ; Input ; Info     ; Stuck at GND ;
++-----------+-------+----------+--------------+
 
 
 +----------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -448,12 +488,32 @@ Note: In order to hide this table in the UI and the text report file, please set
 
 
 +-------------------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "dataMemory:mem"                                                                                    ;
++---------------------+--------+----------+-------------------------------------------------------------------------------------+
+; Port                ; Type   ; Severity ; Details                                                                             ;
++---------------------+--------+----------+-------------------------------------------------------------------------------------+
+; monitor_data[15..4] ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
++---------------------+--------+----------+-------------------------------------------------------------------------------------+
+
+
++-------------------------------------------------------------------------------------------------------------------------------+
 ; Port Connectivity Checks: "registerFile:regFile"                                                                              ;
 +---------------------+--------+----------+-------------------------------------------------------------------------------------+
 ; Port                ; Type   ; Severity ; Details                                                                             ;
 +---------------------+--------+----------+-------------------------------------------------------------------------------------+
 ; monitor_data[15..4] ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
 +---------------------+--------+----------+-------------------------------------------------------------------------------------+
+
+
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "MUX:reg2mux"                                                                                                                                ;
++------+--------+----------+---------------------------------------------------------------------------------------------------------------------------------------------+
+; Port ; Type   ; Severity ; Details                                                                                                                                     ;
++------+--------+----------+---------------------------------------------------------------------------------------------------------------------------------------------+
+; a    ; Input  ; Warning  ; Input port expression (3 bits) is smaller than the input port (16 bits) it drives.  Extra input bit(s) "a[15..3]" will be connected to GND. ;
+; b    ; Input  ; Warning  ; Input port expression (3 bits) is smaller than the input port (16 bits) it drives.  Extra input bit(s) "b[15..3]" will be connected to GND. ;
+; out  ; Output ; Warning  ; Output or bidir port (16 bits) is wider than the port expression (3 bits) it drives; bit(s) "out[15..3]" have no fanouts                    ;
++------+--------+----------+---------------------------------------------------------------------------------------------------------------------------------------------+
 
 
 +------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -482,7 +542,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 +----------------+--------------+
 ; Partition Name ; Elapsed Time ;
 +----------------+--------------+
-; Top            ; 00:00:01     ;
+; Top            ; 00:00:02     ;
 +----------------+--------------+
 
 
@@ -492,7 +552,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 Info: *******************************************************************
 Info: Running Quartus II 64-Bit Analysis & Synthesis
     Info: Version 13.0.1 Build 232 06/12/2013 Service Pack 1 SJ Full Version
-    Info: Processing started: Thu Oct 29 07:19:45 2015
+    Info: Processing started: Thu Nov  5 07:45:49 2015
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off Mips -c Mips
 Info (11104): Parallel Compilation has detected 4 hyper-threaded processors. However, the extra hyper-threaded processors will not be used by default. Parallel Compilation will use 2 of the 2 physical processors detected instead.
 Info (12021): Found 1 design units, including 1 entities, in source file sevenSegment.v
@@ -524,10 +584,13 @@ Info (12021): Found 1 design units, including 1 entities, in source file sign_ex
     Info (12023): Found entity 1: sign_extend
 Info (12021): Found 1 design units, including 1 entities, in source file convertor_two_digit.v
     Info (12023): Found entity 1: convertor_two_digit
-Warning (10236): Verilog HDL Implicit Net warning at Mips.v(23): created implicit net for "clk"
-Critical Warning (10846): Verilog HDL Instantiation warning at Mips.v(18): instance has no name
+Info (12021): Found 1 design units, including 1 entities, in source file dataMemory.v
+    Info (12023): Found entity 1: dataMemory
+Warning (10236): Verilog HDL Implicit Net warning at Mips.v(25): created implicit net for "clk"
+Critical Warning (10846): Verilog HDL Instantiation warning at Mips.v(20): instance has no name
 Info (12127): Elaborating entity "Mips" for the top level hierarchy
 Warning (10034): Output port "LEDR[1]" at Mips.v(9) has no driver
+Warning (10034): Output port "LEDG[7..5]" at Mips.v(10) has no driver
 Info (12128): Elaborating entity "sign_extend" for hierarchy "sign_extend:comb_3"
 Info (12128): Elaborating entity "adder" for hierarchy "adder:add_offset"
 Info (12128): Elaborating entity "MUX" for hierarchy "MUX:pc_mux"
@@ -554,11 +617,15 @@ Info (10041): Inferred latch for "instr_out[15]" at instruction_mem.v(5)
 Info (12128): Elaborating entity "fetch_id_reg" for hierarchy "fetch_id_reg:fe_id_reg"
 Info (12128): Elaborating entity "controller" for hierarchy "controller:control"
 Warning (10230): Verilog HDL assignment warning at controller.v(7): truncated value with size 32 to match size of target (1)
-Warning (10270): Verilog HDL Case Statement warning at controller.v(9): incomplete case statement has no default case item
-Warning (10240): Verilog HDL Always Construct warning at controller.v(8): inferring latch(es) for variable "alu_com", which holds its previous value in one or more paths through the always construct
-Info (10041): Inferred latch for "alu_com[0]" at controller.v(8)
-Info (10041): Inferred latch for "alu_com[1]" at controller.v(8)
-Info (10041): Inferred latch for "alu_com[2]" at controller.v(8)
+Warning (10230): Verilog HDL assignment warning at controller.v(8): truncated value with size 32 to match size of target (1)
+Warning (10230): Verilog HDL assignment warning at controller.v(9): truncated value with size 32 to match size of target (1)
+Warning (10230): Verilog HDL assignment warning at controller.v(10): truncated value with size 32 to match size of target (1)
+Warning (10230): Verilog HDL assignment warning at controller.v(11): truncated value with size 32 to match size of target (1)
+Warning (10270): Verilog HDL Case Statement warning at controller.v(13): incomplete case statement has no default case item
+Warning (10240): Verilog HDL Always Construct warning at controller.v(12): inferring latch(es) for variable "alu_com", which holds its previous value in one or more paths through the always construct
+Info (10041): Inferred latch for "alu_com[0]" at controller.v(12)
+Info (10041): Inferred latch for "alu_com[1]" at controller.v(12)
+Info (10041): Inferred latch for "alu_com[2]" at controller.v(12)
 Info (12128): Elaborating entity "registerFile" for hierarchy "registerFile:regFile"
 Info (12128): Elaborating entity "register" for hierarchy "register:id_ex"
 Info (12128): Elaborating entity "ALU" for hierarchy "ALU:alu"
@@ -579,6 +646,11 @@ Info (10041): Inferred latch for "res[13]" at ALU.v(5)
 Info (10041): Inferred latch for "res[14]" at ALU.v(5)
 Info (10041): Inferred latch for "res[15]" at ALU.v(5)
 Info (12128): Elaborating entity "register" for hierarchy "register:ex_mem"
+Info (12128): Elaborating entity "dataMemory" for hierarchy "dataMemory:mem"
+Warning (10235): Verilog HDL Always Construct warning at dataMemory.v(11): variable "w_en" is read inside the Always Construct but isn't in the Always Construct's Event Control
+Warning (10235): Verilog HDL Always Construct warning at dataMemory.v(11): variable "wdata" is read inside the Always Construct but isn't in the Always Construct's Event Control
+Warning (10235): Verilog HDL Always Construct warning at dataMemory.v(11): variable "addr" is read inside the Always Construct but isn't in the Always Construct's Event Control
+Info (12128): Elaborating entity "register" for hierarchy "register:mem_wb"
 Info (12128): Elaborating entity "sevenSegment" for hierarchy "sevenSegment:s1"
 Warning (10270): Verilog HDL Case Statement warning at sevenSegment.v(5): incomplete case statement has no default case item
 Warning (10240): Verilog HDL Always Construct warning at sevenSegment.v(4): inferring latch(es) for variable "bits", which holds its previous value in one or more paths through the always construct
@@ -603,6 +675,13 @@ Warning (14026): LATCH primitive "sevenSegment:s2|bits[3]" is permanently enable
 Warning (14026): LATCH primitive "sevenSegment:s2|bits[4]" is permanently enabled
 Warning (14026): LATCH primitive "sevenSegment:s2|bits[5]" is permanently enabled
 Warning (14026): LATCH primitive "sevenSegment:s2|bits[6]" is permanently enabled
+Warning (14026): LATCH primitive "sevenSegment:s2|bits[0]" is permanently enabled
+Warning (14026): LATCH primitive "sevenSegment:s2|bits[1]" is permanently enabled
+Warning (14026): LATCH primitive "sevenSegment:s2|bits[2]" is permanently enabled
+Warning (14026): LATCH primitive "sevenSegment:s2|bits[3]" is permanently enabled
+Warning (14026): LATCH primitive "sevenSegment:s2|bits[4]" is permanently enabled
+Warning (14026): LATCH primitive "sevenSegment:s2|bits[5]" is permanently enabled
+Warning (14026): LATCH primitive "sevenSegment:s2|bits[6]" is permanently enabled
 Warning (14026): LATCH primitive "sevenSegment:s3|bits[0]" is permanently enabled
 Warning (14026): LATCH primitive "sevenSegment:s3|bits[1]" is permanently enabled
 Warning (14026): LATCH primitive "sevenSegment:s3|bits[2]" is permanently enabled
@@ -614,6 +693,8 @@ Warning (14026): LATCH primitive "ALU:alu|res[3]" is permanently enabled
 Warning (14026): LATCH primitive "ALU:alu|res[2]" is permanently enabled
 Warning (14026): LATCH primitive "ALU:alu|res[1]" is permanently enabled
 Warning (14026): LATCH primitive "ALU:alu|res[0]" is permanently enabled
+Warning (14026): LATCH primitive "ALU:alu|res[4]" is permanently enabled
+Warning (14026): LATCH primitive "ALU:alu|res[5]" is permanently enabled
 Warning (14026): LATCH primitive "ALU:alu|res[15]" is permanently enabled
 Warning (14026): LATCH primitive "ALU:alu|res[14]" is permanently enabled
 Warning (14026): LATCH primitive "ALU:alu|res[13]" is permanently enabled
@@ -624,102 +705,1119 @@ Warning (14026): LATCH primitive "ALU:alu|res[9]" is permanently enabled
 Warning (14026): LATCH primitive "ALU:alu|res[8]" is permanently enabled
 Warning (14026): LATCH primitive "ALU:alu|res[7]" is permanently enabled
 Warning (14026): LATCH primitive "ALU:alu|res[6]" is permanently enabled
-Warning (14026): LATCH primitive "ALU:alu|res[5]" is permanently enabled
-Warning (14026): LATCH primitive "ALU:alu|res[4]" is permanently enabled
-Warning (14026): LATCH primitive "sevenSegment:s2|bits[0]" is permanently enabled
-Warning (14026): LATCH primitive "sevenSegment:s2|bits[1]" is permanently enabled
-Warning (14026): LATCH primitive "sevenSegment:s2|bits[2]" is permanently enabled
-Warning (14026): LATCH primitive "sevenSegment:s2|bits[3]" is permanently enabled
-Warning (14026): LATCH primitive "sevenSegment:s2|bits[4]" is permanently enabled
-Warning (14026): LATCH primitive "sevenSegment:s2|bits[5]" is permanently enabled
-Warning (14026): LATCH primitive "sevenSegment:s2|bits[6]" is permanently enabled
-Warning (12241): 5 hierarchies have connectivity warnings - see the Connectivity Checks report folder
+Warning (14026): LATCH primitive "dataMemory:mem|memory~0" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~1" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~2" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~3" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~4" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~5" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~6" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~7" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~8" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~9" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~10" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~11" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~12" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~13" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~14" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~15" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~16" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~17" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~18" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~19" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~20" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~21" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~22" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~23" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~24" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~25" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~26" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~27" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~28" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~29" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~30" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~31" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~32" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~33" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~34" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~35" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~36" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~37" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~38" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~39" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~40" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~41" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~42" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~43" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~44" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~45" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~46" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~47" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~48" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~49" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~50" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~51" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~52" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~53" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~54" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~55" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~56" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~57" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~58" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~59" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~60" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~61" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~62" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~63" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~64" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~65" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~66" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~67" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~68" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~69" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~70" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~71" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~72" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~73" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~74" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~75" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~76" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~77" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~78" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~79" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~80" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~81" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~82" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~83" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~84" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~85" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~86" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~87" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~88" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~89" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~90" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~91" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~92" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~93" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~94" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~95" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~96" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~97" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~98" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~99" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~100" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~101" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~102" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~103" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~104" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~105" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~106" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~107" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~108" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~109" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~110" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~111" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~112" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~113" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~114" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~115" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~116" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~117" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~118" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~119" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~120" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~121" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~122" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~123" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~124" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~125" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~126" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~127" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~128" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~129" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~130" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~131" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~132" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~133" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~134" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~135" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~136" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~137" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~138" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~139" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~140" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~141" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~142" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~143" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~144" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~145" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~146" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~147" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~148" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~149" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~150" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~151" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~152" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~153" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~154" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~155" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~156" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~157" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~158" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~159" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~160" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~161" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~162" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~163" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~164" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~165" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~166" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~167" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~168" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~169" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~170" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~171" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~172" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~173" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~174" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~175" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~176" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~177" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~178" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~179" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~180" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~181" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~182" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~183" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~184" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~185" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~186" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~187" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~188" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~189" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~190" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~191" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~192" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~193" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~194" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~195" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~196" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~197" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~198" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~199" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~200" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~201" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~202" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~203" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~204" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~205" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~206" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~207" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~208" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~209" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~210" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~211" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~212" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~213" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~214" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~215" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~216" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~217" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~218" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~219" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~220" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~221" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~222" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~223" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~224" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~225" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~226" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~227" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~228" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~229" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~230" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~231" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~232" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~233" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~234" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~235" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~236" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~237" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~238" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~239" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~240" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~241" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~242" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~243" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~244" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~245" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~246" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~247" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~248" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~249" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~250" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~251" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~252" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~253" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~254" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~255" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~256" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~257" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~258" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~259" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~260" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~261" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~262" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~263" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~264" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~265" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~266" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~267" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~268" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~269" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~270" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~271" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~272" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~273" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~274" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~275" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~276" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~277" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~278" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~279" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~280" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~281" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~282" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~283" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~284" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~285" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~286" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~287" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~288" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~289" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~290" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~291" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~292" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~293" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~294" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~295" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~296" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~297" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~298" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~299" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~300" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~301" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~302" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~303" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~304" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~305" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~306" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~307" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~308" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~309" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~310" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~311" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~312" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~313" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~314" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~315" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~316" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~317" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~318" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~319" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~320" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~321" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~322" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~323" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~324" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~325" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~326" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~327" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~328" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~329" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~330" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~331" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~332" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~333" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~334" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~335" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~336" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~337" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~338" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~339" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~340" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~341" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~342" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~343" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~344" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~345" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~346" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~347" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~348" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~349" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~350" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~351" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~352" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~353" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~354" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~355" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~356" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~357" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~358" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~359" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~360" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~361" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~362" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~363" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~364" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~365" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~366" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~367" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~368" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~369" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~370" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~371" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~372" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~373" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~374" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~375" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~376" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~377" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~378" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~379" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~380" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~381" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~382" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~383" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~384" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~385" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~386" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~387" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~388" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~389" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~390" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~391" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~392" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~393" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~394" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~395" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~396" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~397" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~398" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~399" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~400" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~401" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~402" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~403" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~404" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~405" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~406" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~407" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~408" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~409" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~410" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~411" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~412" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~413" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~414" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~415" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~416" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~417" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~418" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~419" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~420" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~421" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~422" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~423" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~424" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~425" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~426" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~427" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~428" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~429" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~430" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~431" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~432" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~433" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~434" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~435" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~436" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~437" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~438" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~439" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~440" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~441" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~442" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~443" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~444" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~445" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~446" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~447" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~448" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~449" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~450" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~451" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~452" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~453" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~454" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~455" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~456" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~457" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~458" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~459" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~460" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~461" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~462" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~463" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~464" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~465" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~466" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~467" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~468" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~469" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~470" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~471" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~472" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~473" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~474" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~475" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~476" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~477" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~478" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~479" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~480" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~481" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~482" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~483" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~484" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~485" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~486" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~487" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~488" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~489" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~490" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~491" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~492" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~493" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~494" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~495" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~496" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~497" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~498" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~499" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~500" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~501" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~502" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~503" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~504" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~505" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~506" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~507" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~508" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~509" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~510" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~511" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~512" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~513" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~514" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~515" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~516" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~517" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~518" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~519" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~520" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~521" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~522" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~523" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~524" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~525" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~526" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~527" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~528" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~529" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~530" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~531" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~532" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~533" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~534" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~535" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~536" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~537" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~538" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~539" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~540" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~541" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~542" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~543" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~544" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~545" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~546" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~547" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~548" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~549" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~550" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~551" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~552" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~553" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~554" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~555" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~556" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~557" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~558" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~559" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~560" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~561" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~562" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~563" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~564" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~565" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~566" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~567" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~568" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~569" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~570" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~571" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~572" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~573" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~574" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~575" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~576" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~577" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~578" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~579" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~580" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~581" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~582" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~583" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~584" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~585" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~586" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~587" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~588" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~589" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~590" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~591" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~592" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~593" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~594" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~595" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~596" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~597" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~598" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~599" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~600" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~601" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~602" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~603" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~604" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~605" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~606" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~607" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~608" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~609" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~610" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~611" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~612" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~613" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~614" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~615" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~616" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~617" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~618" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~619" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~620" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~621" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~622" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~623" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~624" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~625" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~626" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~627" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~628" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~629" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~630" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~631" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~632" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~633" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~634" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~635" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~636" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~637" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~638" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~639" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~640" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~641" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~642" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~643" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~644" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~645" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~646" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~647" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~648" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~649" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~650" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~651" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~652" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~653" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~654" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~655" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~656" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~657" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~658" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~659" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~660" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~661" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~662" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~663" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~664" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~665" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~666" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~667" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~668" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~669" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~670" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~671" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~672" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~673" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~674" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~675" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~676" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~677" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~678" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~679" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~680" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~681" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~682" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~683" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~684" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~685" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~686" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~687" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~688" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~689" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~690" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~691" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~692" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~693" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~694" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~695" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~696" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~697" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~698" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~699" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~700" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~701" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~702" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~703" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~704" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~705" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~706" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~707" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~708" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~709" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~710" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~711" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~712" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~713" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~714" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~715" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~716" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~717" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~718" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~719" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~720" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~721" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~722" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~723" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~724" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~725" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~726" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~727" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~728" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~729" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~730" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~731" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~732" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~733" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~734" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~735" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~736" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~737" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~738" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~739" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~740" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~741" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~742" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~743" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~744" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~745" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~746" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~747" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~748" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~749" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~750" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~751" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~752" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~753" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~754" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~755" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~756" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~757" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~758" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~759" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~760" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~761" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~762" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~763" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~764" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~765" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~766" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~767" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~768" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~769" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~770" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~771" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~772" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~773" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~774" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~775" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~776" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~777" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~778" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~779" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~780" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~781" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~782" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~783" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~784" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~785" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~786" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~787" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~788" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~789" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~790" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~791" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~792" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~793" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~794" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~795" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~796" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~797" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~798" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~799" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~800" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~801" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~802" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~803" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~804" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~805" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~806" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~807" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~808" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~809" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~810" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~811" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~812" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~813" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~814" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~815" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~816" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~817" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~818" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~819" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~820" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~821" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~822" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~823" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~824" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~825" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~826" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~827" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~828" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~829" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~830" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~831" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~832" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~833" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~834" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~835" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~836" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~837" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~838" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~839" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~840" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~841" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~842" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~843" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~844" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~845" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~846" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~847" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~848" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~849" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~850" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~851" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~852" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~853" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~854" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~855" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~856" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~857" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~858" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~859" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~860" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~861" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~862" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~863" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~864" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~865" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~866" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~867" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~868" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~869" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~870" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~871" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~872" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~873" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~874" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~875" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~876" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~877" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~878" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~879" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~880" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~881" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~882" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~883" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~884" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~885" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~886" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~887" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~888" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~889" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~890" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~891" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~892" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~893" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~894" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~895" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~896" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~897" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~898" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~899" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~900" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~901" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~902" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~903" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~904" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~905" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~906" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~907" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~908" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~909" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~910" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~911" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~912" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~913" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~914" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~915" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~916" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~917" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~918" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~919" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~920" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~921" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~922" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~923" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~924" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~925" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~926" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~927" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~928" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~929" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~930" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~931" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~932" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~933" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~934" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~935" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~936" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~937" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~938" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~939" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~940" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~941" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~942" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~943" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~944" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~945" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~946" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~947" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~948" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~949" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~950" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~951" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~952" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~953" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~954" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~955" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~956" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~957" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~958" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~959" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~960" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~961" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~962" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~963" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~964" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~965" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~966" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~967" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~968" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~969" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~970" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~971" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~972" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~973" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~974" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~975" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~976" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~977" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~978" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~979" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~980" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~981" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~982" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~983" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~984" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~985" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~986" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~987" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~988" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~989" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~990" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~991" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~992" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~993" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~994" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~995" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~996" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~997" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~998" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~999" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~1000" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~1001" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~1002" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~1003" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~1004" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~1005" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~1006" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~1007" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~1008" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~1009" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~1010" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~1011" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~1012" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~1013" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~1014" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~1015" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~1016" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~1017" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~1018" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~1019" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~1020" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~1021" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~1022" is permanently enabled
+Warning (14026): LATCH primitive "dataMemory:mem|memory~1023" is permanently enabled
+Warning (12241): 4 hierarchies have connectivity warnings - see the Connectivity Checks report folder
 Info (13025): Duplicate LATCH primitives merged into single LATCH primitive
-    Info (13026): Duplicate LATCH primitive "instruction_mem:ins_mem|instr_out[5]" merged with LATCH primitive "instruction_mem:ins_mem|instr_out[2]"
+    Info (13026): Duplicate LATCH primitive "instruction_mem:ins_mem|instr_out[6]" merged with LATCH primitive "instruction_mem:ins_mem|instr_out[2]"
 Warning (13012): Latch sevenSegment:s1|bits[0] has unsafe behavior
     Warning (13013): Ports D and ENA on the latch are fed by the same signal pc:p1|counter[1]
 Warning (13012): Latch sevenSegment:s1|bits[1] has unsafe behavior
     Warning (13013): Ports D and ENA on the latch are fed by the same signal pc:p1|counter[2]
 Warning (13012): Latch sevenSegment:s1|bits[2] has unsafe behavior
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal pc:p1|counter[2]
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal pc:p1|counter[1]
 Warning (13012): Latch sevenSegment:s1|bits[3] has unsafe behavior
     Warning (13013): Ports D and ENA on the latch are fed by the same signal pc:p1|counter[1]
 Warning (13012): Latch sevenSegment:s1|bits[4] has unsafe behavior
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal pc:p1|counter[2]
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal pc:p1|counter[1]
 Warning (13012): Latch sevenSegment:s1|bits[5] has unsafe behavior
     Warning (13013): Ports D and ENA on the latch are fed by the same signal pc:p1|counter[1]
 Warning (13012): Latch sevenSegment:s1|bits[6] has unsafe behavior
     Warning (13013): Ports D and ENA on the latch are fed by the same signal pc:p1|counter[1]
 Warning (13012): Latch sevenSegment:s7|bits[0] has unsafe behavior
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal fetch_id_reg:fe_id_reg|inst_out_reg[8]
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal register:id_ex|out[17]
 Warning (13012): Latch sevenSegment:s7|bits[1] has unsafe behavior
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal fetch_id_reg:fe_id_reg|inst_out_reg[8]
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal register:id_ex|out[18]
 Warning (13012): Latch sevenSegment:s7|bits[2] has unsafe behavior
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal fetch_id_reg:fe_id_reg|inst_out_reg[8]
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal register:id_ex|out[18]
 Warning (13012): Latch sevenSegment:s7|bits[3] has unsafe behavior
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal fetch_id_reg:fe_id_reg|inst_out_reg[8]
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal register:id_ex|out[17]
 Warning (13012): Latch sevenSegment:s7|bits[4] has unsafe behavior
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal fetch_id_reg:fe_id_reg|inst_out_reg[8]
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal register:id_ex|out[18]
 Warning (13012): Latch sevenSegment:s7|bits[5] has unsafe behavior
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal fetch_id_reg:fe_id_reg|inst_out_reg[8]
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal register:id_ex|out[17]
 Warning (13012): Latch sevenSegment:s7|bits[6] has unsafe behavior
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal fetch_id_reg:fe_id_reg|inst_out_reg[8]
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal register:id_ex|out[17]
 Warning (13012): Latch sevenSegment:s5|bits[0] has unsafe behavior
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal registerFile:regFile|Mux30
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal register:id_ex|out[55]
 Warning (13012): Latch sevenSegment:s5|bits[1] has unsafe behavior
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal registerFile:regFile|Mux29
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal register:id_ex|out[2]
 Warning (13012): Latch sevenSegment:s5|bits[2] has unsafe behavior
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal registerFile:regFile|Mux30
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal register:id_ex|out[2]
 Warning (13012): Latch sevenSegment:s5|bits[3] has unsafe behavior
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal registerFile:regFile|Mux30
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal register:id_ex|out[55]
 Warning (13012): Latch sevenSegment:s5|bits[4] has unsafe behavior
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal registerFile:regFile|Mux30
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal register:id_ex|out[55]
 Warning (13012): Latch sevenSegment:s5|bits[5] has unsafe behavior
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal registerFile:regFile|Mux30
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal register:id_ex|out[55]
 Warning (13012): Latch sevenSegment:s5|bits[6] has unsafe behavior
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal registerFile:regFile|Mux30
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal register:id_ex|out[55]
 Warning (13012): Latch sevenSegment:s6|bits[0] has unsafe behavior
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal register:mem_wb|out[5]
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal register:mem_wb|out[36]
 Warning (13012): Latch sevenSegment:s6|bits[1] has unsafe behavior
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal register:mem_wb|out[6]
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal register:mem_wb|out[22]
 Warning (13012): Latch sevenSegment:s6|bits[2] has unsafe behavior
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal register:mem_wb|out[6]
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal register:mem_wb|out[22]
 Warning (13012): Latch sevenSegment:s6|bits[3] has unsafe behavior
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal register:mem_wb|out[5]
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal register:mem_wb|out[36]
 Warning (13012): Latch sevenSegment:s6|bits[4] has unsafe behavior
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal register:mem_wb|out[6]
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal register:mem_wb|out[36]
 Warning (13012): Latch sevenSegment:s6|bits[5] has unsafe behavior
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal register:mem_wb|out[5]
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal register:mem_wb|out[36]
 Warning (13012): Latch sevenSegment:s6|bits[6] has unsafe behavior
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal register:mem_wb|out[5]
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal register:mem_wb|out[36]
 Warning (13012): Latch sevenSegment:s4|bits[0] has unsafe behavior
     Warning (13013): Ports D and ENA on the latch are fed by the same signal registerFile:regFile|Mux46
 Warning (13012): Latch sevenSegment:s4|bits[1] has unsafe behavior
     Warning (13013): Ports D and ENA on the latch are fed by the same signal registerFile:regFile|Mux45
 Warning (13012): Latch sevenSegment:s4|bits[2] has unsafe behavior
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal registerFile:regFile|Mux45
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal registerFile:regFile|Mux46
 Warning (13012): Latch sevenSegment:s4|bits[3] has unsafe behavior
     Warning (13013): Ports D and ENA on the latch are fed by the same signal registerFile:regFile|Mux46
 Warning (13012): Latch sevenSegment:s4|bits[4] has unsafe behavior
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal registerFile:regFile|Mux45
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal registerFile:regFile|Mux46
 Warning (13012): Latch sevenSegment:s4|bits[5] has unsafe behavior
     Warning (13013): Ports D and ENA on the latch are fed by the same signal registerFile:regFile|Mux46
 Warning (13012): Latch sevenSegment:s4|bits[6] has unsafe behavior
     Warning (13013): Ports D and ENA on the latch are fed by the same signal registerFile:regFile|Mux46
 Warning (13012): Latch sevenSegment:s8|bits[0] has unsafe behavior
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal adder:add_offset|result[1]~synth
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal register:ex_mem|out[21]
 Warning (13012): Latch sevenSegment:s8|bits[1] has unsafe behavior
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal adder:add_offset|result[2]~synth
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal register:ex_mem|out[22]
 Warning (13012): Latch sevenSegment:s8|bits[2] has unsafe behavior
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal adder:add_offset|result[1]~synth
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal register:ex_mem|out[22]
 Warning (13012): Latch sevenSegment:s8|bits[3] has unsafe behavior
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal adder:add_offset|result[1]~synth
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal register:ex_mem|out[21]
 Warning (13012): Latch sevenSegment:s8|bits[4] has unsafe behavior
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal adder:add_offset|result[1]~synth
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal register:ex_mem|out[22]
 Warning (13012): Latch sevenSegment:s8|bits[5] has unsafe behavior
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal adder:add_offset|result[1]~synth
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal register:ex_mem|out[21]
 Warning (13012): Latch sevenSegment:s8|bits[6] has unsafe behavior
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal adder:add_offset|result[1]~synth
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal register:ex_mem|out[21]
+Warning (13012): Latch instruction_mem:ins_mem|instr_out[0] has unsafe behavior
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal pc:p1|counter[0]
 Warning (13012): Latch instruction_mem:ins_mem|instr_out[1] has unsafe behavior
     Warning (13013): Ports D and ENA on the latch are fed by the same signal pc:p1|counter[0]
 Warning (13012): Latch instruction_mem:ins_mem|instr_out[2] has unsafe behavior
@@ -727,6 +1825,8 @@ Warning (13012): Latch instruction_mem:ins_mem|instr_out[2] has unsafe behavior
 Warning (13012): Latch instruction_mem:ins_mem|instr_out[3] has unsafe behavior
     Warning (13013): Ports D and ENA on the latch are fed by the same signal pc:p1|counter[0]
 Warning (13012): Latch instruction_mem:ins_mem|instr_out[4] has unsafe behavior
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal pc:p1|counter[0]
+Warning (13012): Latch instruction_mem:ins_mem|instr_out[5] has unsafe behavior
     Warning (13013): Ports D and ENA on the latch are fed by the same signal pc:p1|counter[0]
 Warning (13012): Latch instruction_mem:ins_mem|instr_out[7] has unsafe behavior
     Warning (13013): Ports D and ENA on the latch are fed by the same signal pc:p1|counter[0]
@@ -747,17 +1847,19 @@ Warning (13012): Latch instruction_mem:ins_mem|instr_out[14] has unsafe behavior
 Warning (13012): Latch instruction_mem:ins_mem|instr_out[15] has unsafe behavior
     Warning (13013): Ports D and ENA on the latch are fed by the same signal pc:p1|counter[0]
 Warning (13012): Latch controller:control|alu_com[0] has unsafe behavior
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal fetch_id_reg:fe_id_reg|inst_out_reg[12]
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal fetch_id_reg:fe_id_reg|inst_out_reg[15]
 Warning (13012): Latch controller:control|alu_com[2] has unsafe behavior
     Warning (13013): Ports D and ENA on the latch are fed by the same signal fetch_id_reg:fe_id_reg|inst_out_reg[14]
 Warning (13012): Latch controller:control|alu_com[1] has unsafe behavior
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal fetch_id_reg:fe_id_reg|inst_out_reg[13]
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal fetch_id_reg:fe_id_reg|inst_out_reg[15]
 Info (13000): Registers with preset signals will power-up high
 Info (13003): DEV_CLRn pin will set, and not reset, register with preset signal due to NOT Gate Push-Back
 Warning (13024): Output pins are stuck at VCC or GND
     Warning (13410): Pin "LEDR[1]" is stuck at GND
-    Warning (13410): Pin "LEDR[2]" is stuck at GND
-    Warning (13410): Pin "LEDR[8]" is stuck at GND
+    Warning (13410): Pin "LEDG[5]" is stuck at GND
+    Warning (13410): Pin "LEDG[6]" is stuck at GND
+    Warning (13410): Pin "LEDG[7]" is stuck at GND
+Info (17049): 2 registers lost all their fanouts during netlist optimizations.
 Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
     Info (16011): Adding 0 node(s), including 0 DDIO, 0 PLL, 0 transceiver and 0 LCELL
 Warning (21074): Design contains 18 input pin(s) that do not drive logic
@@ -774,19 +1876,19 @@ Warning (21074): Design contains 18 input pin(s) that do not drive logic
     Warning (15610): No output dependent on input pin "SW[9]"
     Warning (15610): No output dependent on input pin "SW[10]"
     Warning (15610): No output dependent on input pin "SW[11]"
+    Warning (15610): No output dependent on input pin "KEY[0]"
+    Warning (15610): No output dependent on input pin "KEY[2]"
     Warning (15610): No output dependent on input pin "SW[12]"
     Warning (15610): No output dependent on input pin "SW[13]"
     Warning (15610): No output dependent on input pin "SW[14]"
-    Warning (15610): No output dependent on input pin "KEY[0]"
-    Warning (15610): No output dependent on input pin "KEY[2]"
-Info (21057): Implemented 865 device resources after synthesis - the final resource count might be different
+Info (21057): Implemented 995 device resources after synthesis - the final resource count might be different
     Info (21058): Implemented 23 input pins
-    Info (21059): Implemented 74 output pins
-    Info (21061): Implemented 768 logic cells
-Info: Quartus II 64-Bit Analysis & Synthesis was successful. 0 errors, 195 warnings
-    Info: Peak virtual memory: 623 megabytes
-    Info: Processing ended: Thu Oct 29 07:19:48 2015
-    Info: Elapsed time: 00:00:03
-    Info: Total CPU time (on all processors): 00:00:03
+    Info (21059): Implemented 82 output pins
+    Info (21061): Implemented 890 logic cells
+Info: Quartus II 64-Bit Analysis & Synthesis was successful. 0 errors, 1232 warnings
+    Info: Peak virtual memory: 630 megabytes
+    Info: Processing ended: Thu Nov  5 07:45:53 2015
+    Info: Elapsed time: 00:00:04
+    Info: Total CPU time (on all processors): 00:00:04
 
 

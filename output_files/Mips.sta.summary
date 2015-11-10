@@ -3,194 +3,218 @@ TimeQuest Timing Analyzer Summary
 ------------------------------------------------------------
 
 Type  : Slow Model Setup 'KEY[1]'
-Slack : -5.387
-TNS   : -547.039
+Slack : -6.583
+TNS   : -774.734
 
-Type  : Slow Model Setup 'fetch_id_reg:fe_id_reg|inst_out_reg[3]'
-Slack : -2.797
-TNS   : -26.607
+Type  : Slow Model Setup 'pc:p1|counter[0]'
+Slack : -3.841
+TNS   : -50.977
 
 Type  : Slow Model Setup 'pc:p1|counter[1]'
-Slack : -2.584
-TNS   : -23.544
+Slack : -3.776
+TNS   : -55.458
 
-Type  : Slow Model Setup 'fetch_id_reg:fe_id_reg|inst_out_reg[7]'
-Slack : -2.216
-TNS   : -11.812
+Type  : Slow Model Setup 'register:mem_wb|out[21]'
+Slack : -2.342
+TNS   : -15.026
 
-Type  : Slow Model Setup 'pc:p1|counter[10]'
-Slack : -2.210
-TNS   : -27.593
+Type  : Slow Model Setup 'register:id_ex|out[1]'
+Slack : -2.202
+TNS   : -14.663
 
-Type  : Slow Model Setup 'register:mem_wb|out[5]'
-Slack : -1.936
-TNS   : -10.543
+Type  : Slow Model Setup 'register:id_ex|out[17]'
+Slack : -1.402
+TNS   : -6.906
 
-Type  : Slow Model Setup 'fetch_id_reg:fe_id_reg|inst_out_reg[12]'
-Slack : -1.344
-TNS   : -2.412
+Type  : Slow Model Setup 'fetch_id_reg:fe_id_reg|inst_out_reg[14]'
+Slack : -1.139
+TNS   : -2.785
+
+Type  : Slow Model Setup 'register:ex_mem|out[21]'
+Slack : -1.137
+TNS   : -4.681
 
 Type  : Slow Model Setup 'SW[15]'
-Slack : -0.463
-TNS   : -1.881
-
-Type  : Slow Model Hold 'SW[15]'
-Slack : -5.089
-TNS   : -34.671
-
-Type  : Slow Model Hold 'fetch_id_reg:fe_id_reg|inst_out_reg[7]'
-Slack : -4.085
-TNS   : -26.425
-
-Type  : Slow Model Hold 'fetch_id_reg:fe_id_reg|inst_out_reg[3]'
-Slack : -3.562
-TNS   : -48.244
+Slack : 0.164
+TNS   : 0.000
 
 Type  : Slow Model Hold 'pc:p1|counter[1]'
-Slack : -3.398
-TNS   : -44.423
+Slack : -4.484
+TNS   : -82.433
 
-Type  : Slow Model Hold 'pc:p1|counter[10]'
-Slack : -3.319
-TNS   : -39.215
+Type  : Slow Model Hold 'pc:p1|counter[0]'
+Slack : -4.438
+TNS   : -58.446
 
-Type  : Slow Model Hold 'fetch_id_reg:fe_id_reg|inst_out_reg[12]'
-Slack : -2.908
-TNS   : -7.357
+Type  : Slow Model Hold 'SW[15]'
+Slack : -4.074
+TNS   : -27.292
 
-Type  : Slow Model Hold 'register:mem_wb|out[5]'
-Slack : -2.594
-TNS   : -15.697
+Type  : Slow Model Hold 'register:ex_mem|out[21]'
+Slack : -3.102
+TNS   : -21.073
+
+Type  : Slow Model Hold 'register:id_ex|out[17]'
+Slack : -3.067
+TNS   : -19.276
+
+Type  : Slow Model Hold 'register:mem_wb|out[21]'
+Slack : -2.643
+TNS   : -17.959
 
 Type  : Slow Model Hold 'KEY[1]'
-Slack : -2.436
-TNS   : -69.342
+Slack : -2.348
+TNS   : -54.344
+
+Type  : Slow Model Hold 'register:id_ex|out[1]'
+Slack : -2.272
+TNS   : -14.977
+
+Type  : Slow Model Hold 'fetch_id_reg:fe_id_reg|inst_out_reg[14]'
+Slack : -2.269
+TNS   : -2.269
 
 Type  : Slow Model Minimum Pulse Width 'KEY[1]'
 Slack : -1.222
-TNS   : -221.222
+TNS   : -265.222
 
 Type  : Slow Model Minimum Pulse Width 'SW[15]'
 Slack : -1.222
-TNS   : -51.272
+TNS   : -19.508
 
-Type  : Slow Model Minimum Pulse Width 'fetch_id_reg:fe_id_reg|inst_out_reg[3]'
-Slack : 0.095
-TNS   : 0.000
+Type  : Slow Model Minimum Pulse Width 'pc:p1|counter[0]'
+Slack : -0.711
+TNS   : -49.896
 
 Type  : Slow Model Minimum Pulse Width 'pc:p1|counter[1]'
-Slack : 0.100
-TNS   : 0.000
+Slack : -0.617
+TNS   : -75.900
 
-Type  : Slow Model Minimum Pulse Width 'fetch_id_reg:fe_id_reg|inst_out_reg[7]'
-Slack : 0.186
-TNS   : 0.000
-
-Type  : Slow Model Minimum Pulse Width 'fetch_id_reg:fe_id_reg|inst_out_reg[12]'
+Type  : Slow Model Minimum Pulse Width 'fetch_id_reg:fe_id_reg|inst_out_reg[14]'
 Slack : 0.500
 TNS   : 0.000
 
-Type  : Slow Model Minimum Pulse Width 'pc:p1|counter[10]'
+Type  : Slow Model Minimum Pulse Width 'register:ex_mem|out[21]'
 Slack : 0.500
 TNS   : 0.000
 
-Type  : Slow Model Minimum Pulse Width 'register:mem_wb|out[5]'
+Type  : Slow Model Minimum Pulse Width 'register:id_ex|out[17]'
+Slack : 0.500
+TNS   : 0.000
+
+Type  : Slow Model Minimum Pulse Width 'register:id_ex|out[1]'
+Slack : 0.500
+TNS   : 0.000
+
+Type  : Slow Model Minimum Pulse Width 'register:mem_wb|out[21]'
 Slack : 0.500
 TNS   : 0.000
 
 Type  : Fast Model Setup 'KEY[1]'
-Slack : -1.754
-TNS   : -147.782
+Slack : -2.455
+TNS   : -235.798
 
-Type  : Fast Model Setup 'fetch_id_reg:fe_id_reg|inst_out_reg[3]'
-Slack : -1.000
-TNS   : -7.521
+Type  : Fast Model Setup 'pc:p1|counter[0]'
+Slack : -1.418
+TNS   : -18.339
 
 Type  : Fast Model Setup 'pc:p1|counter[1]'
-Slack : -0.869
-TNS   : -6.598
+Slack : -1.367
+TNS   : -17.866
 
-Type  : Fast Model Setup 'fetch_id_reg:fe_id_reg|inst_out_reg[7]'
-Slack : -0.706
-TNS   : -3.176
+Type  : Fast Model Setup 'register:id_ex|out[1]'
+Slack : -0.723
+TNS   : -4.544
 
-Type  : Fast Model Setup 'pc:p1|counter[10]'
-Slack : -0.669
-TNS   : -8.101
+Type  : Fast Model Setup 'register:mem_wb|out[21]'
+Slack : -0.681
+TNS   : -4.186
 
-Type  : Fast Model Setup 'register:mem_wb|out[5]'
-Slack : -0.535
-TNS   : -2.341
+Type  : Fast Model Setup 'register:id_ex|out[17]'
+Slack : -0.289
+TNS   : -0.779
 
-Type  : Fast Model Setup 'fetch_id_reg:fe_id_reg|inst_out_reg[12]'
-Slack : -0.332
-TNS   : -0.578
+Type  : Fast Model Setup 'fetch_id_reg:fe_id_reg|inst_out_reg[14]'
+Slack : -0.258
+TNS   : -0.559
+
+Type  : Fast Model Setup 'register:ex_mem|out[21]'
+Slack : -0.173
+TNS   : -0.379
 
 Type  : Fast Model Setup 'SW[15]'
-Slack : 0.273
+Slack : 0.485
 TNS   : 0.000
 
-Type  : Fast Model Hold 'SW[15]'
-Slack : -2.609
-TNS   : -17.877
-
-Type  : Fast Model Hold 'fetch_id_reg:fe_id_reg|inst_out_reg[7]'
-Slack : -2.163
-TNS   : -14.192
-
-Type  : Fast Model Hold 'fetch_id_reg:fe_id_reg|inst_out_reg[3]'
-Slack : -1.947
-TNS   : -26.613
-
-Type  : Fast Model Hold 'pc:p1|counter[10]'
-Slack : -1.880
-TNS   : -22.690
-
 Type  : Fast Model Hold 'pc:p1|counter[1]'
-Slack : -1.863
-TNS   : -24.297
+Slack : -2.331
+TNS   : -44.302
 
-Type  : Fast Model Hold 'fetch_id_reg:fe_id_reg|inst_out_reg[12]'
-Slack : -1.628
-TNS   : -4.241
+Type  : Fast Model Hold 'pc:p1|counter[0]'
+Slack : -2.317
+TNS   : -31.202
 
-Type  : Fast Model Hold 'register:mem_wb|out[5]'
-Slack : -1.523
-TNS   : -9.561
+Type  : Fast Model Hold 'SW[15]'
+Slack : -2.058
+TNS   : -14.296
+
+Type  : Fast Model Hold 'register:id_ex|out[17]'
+Slack : -1.747
+TNS   : -11.189
+
+Type  : Fast Model Hold 'register:ex_mem|out[21]'
+Slack : -1.746
+TNS   : -11.933
+
+Type  : Fast Model Hold 'register:mem_wb|out[21]'
+Slack : -1.551
+TNS   : -10.557
 
 Type  : Fast Model Hold 'KEY[1]'
-Slack : -1.415
-TNS   : -56.595
+Slack : -1.426
+TNS   : -46.246
+
+Type  : Fast Model Hold 'register:id_ex|out[1]'
+Slack : -1.345
+TNS   : -9.040
+
+Type  : Fast Model Hold 'fetch_id_reg:fe_id_reg|inst_out_reg[14]'
+Slack : -1.339
+TNS   : -1.339
 
 Type  : Fast Model Minimum Pulse Width 'KEY[1]'
 Slack : -1.222
-TNS   : -221.222
+TNS   : -265.222
 
 Type  : Fast Model Minimum Pulse Width 'SW[15]'
 Slack : -1.222
-TNS   : -9.178
+TNS   : -1.222
 
-Type  : Fast Model Minimum Pulse Width 'fetch_id_reg:fe_id_reg|inst_out_reg[3]'
-Slack : 0.313
-TNS   : 0.000
+Type  : Fast Model Minimum Pulse Width 'pc:p1|counter[0]'
+Slack : -0.031
+TNS   : -2.046
 
 Type  : Fast Model Minimum Pulse Width 'pc:p1|counter[1]'
-Slack : 0.341
+Slack : 0.019
 TNS   : 0.000
 
-Type  : Fast Model Minimum Pulse Width 'fetch_id_reg:fe_id_reg|inst_out_reg[7]'
-Slack : 0.345
-TNS   : 0.000
-
-Type  : Fast Model Minimum Pulse Width 'fetch_id_reg:fe_id_reg|inst_out_reg[12]'
+Type  : Fast Model Minimum Pulse Width 'fetch_id_reg:fe_id_reg|inst_out_reg[14]'
 Slack : 0.500
 TNS   : 0.000
 
-Type  : Fast Model Minimum Pulse Width 'pc:p1|counter[10]'
+Type  : Fast Model Minimum Pulse Width 'register:ex_mem|out[21]'
 Slack : 0.500
 TNS   : 0.000
 
-Type  : Fast Model Minimum Pulse Width 'register:mem_wb|out[5]'
+Type  : Fast Model Minimum Pulse Width 'register:id_ex|out[17]'
+Slack : 0.500
+TNS   : 0.000
+
+Type  : Fast Model Minimum Pulse Width 'register:id_ex|out[1]'
+Slack : 0.500
+TNS   : 0.000
+
+Type  : Fast Model Minimum Pulse Width 'register:mem_wb|out[21]'
 Slack : 0.500
 TNS   : 0.000
 

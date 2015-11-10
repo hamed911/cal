@@ -1,0 +1,11 @@
+module dataMemory(clk,rst,addr,wdata,w_en,rdata);
+input clk,rst,w_en;
+input [7:0] addr;
+input [15:0] wdata;
+output [15:0] rdata;
+reg [15:0] memory [63:0];
+assign rdata = memory[addr];
+always@(posedge clk) begin
+	if(w_en)memory[addr] = wdata;
+end
+endmodule
