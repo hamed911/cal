@@ -13,8 +13,9 @@ always@(pc_out)begin
 		6: instr_out=16'b0101_101_100_011_000;//xor
 		7: instr_out=16'b0010_101_100_011_000;//sub
 		8: instr_out=16'b1011_111_011_000100;//store
-		9: instr_out=16'b1010_101_010_000011;//load
+		9: instr_out=16'b1010_110_010_000011;//load
 		10: instr_out=16'b1100_000_000_111010;//bz pc=pc+1-6
+		default: instr_out=0;
 	endcase
 end
 endmodule

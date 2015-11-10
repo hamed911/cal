@@ -52,13 +52,15 @@ assign LEDG[1] = mem_write_en;
 assign LEDG[2] = alu_src;
 assign LEDG[3] = reg2sel;
 assign LEDG[4] = w_en;
+assign LEDG[5] = ex_mem_reg_out[36];
 
 /////Write back
 //convertor_two_digit convert(monitor_regFile,HEX6,HEX7);
 sevenSegment s1(pc_out[3:0],HEX0);//pc
 sevenSegment s2(inst_out_reg[8:6],HEX1);//reg1Index
-sevenSegment s3({1'b0,reg2src[2:0]},HEX2);// reg2Index
-sevenSegment s7(id_ex_reg_out[19:16],HEX3);//aluIn1
+sevenSegment s3(ex_mem_reg_out[7:4],HEX2);// reg2Index
+//sevenSegment s7(id_ex_reg_out[19:16],HEX3);//aluIn1
+sevenSegment s7(mem_out[3:0],HEX3);
 sevenSegment s5(aluIn2[3:0],HEX4);//aluIn2
 sevenSegment s6(write_back_data[3:0],HEX5);//write_back_data
 sevenSegment s4(monitor_regFile[3:0],HEX6);//data1

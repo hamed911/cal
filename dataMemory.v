@@ -5,9 +5,14 @@ input [15:0] wdata;
 input [2:0] monitor_addr;
 output [15:0] rdata,monitor_data;
 reg [15:0] memory [63:0];
-assign rdata = memory[{8'b00000000,addr}];
-assign monitor_data = memory[{13'b0000000000000,monitor_addr}];
-always@(clk) begin
+assign rdata = memory[addr];
+assign monitor_data = memory[monitor_addr];
+always@(negedge clk) begin
+	if(rst==1) begin
+		memory[0] =1;
+		memory[5] =4;
+		memory[1] =2;
+	end
 	if(w_en)memory[addr] = wdata;
 end
 endmodule
