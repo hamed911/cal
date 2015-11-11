@@ -2,6 +2,7 @@ module registerFile(clk,rst,rg_wrt_enable,rg_wrt_dest,rg_wrt_data,
 		rg_rd_add1,rg_rd_data1,rg_rd_add2,rg_rd_data2,monitor_addr,monitor_data);
 input clk,rst;
 //wire port
+integer i;
 input rg_wrt_enable;
 input [2:0] rg_wrt_dest;
 input [15:0] rg_wrt_data;
@@ -20,11 +21,20 @@ assign monitor_data = registers[monitor_addr];
 
 always@(posedge clk,posedge rst)begin
 	if(rst) begin
-		registers [1] = 1;
+		/*registers [1] = 1;
 		registers [2] = 2;
 		registers [3] = 3;
-		registers [4] = 4;
+		registers [4] = 4;*/
+		registers [0] = 0;
+		registers [1] = 0;
+		registers [2] = 0;
+		registers [3] = 0;
+		registers [4] = 0;
+		registers [5] = 0;
+		registers [6] = 0;
+		registers [7] = 0;
 	end
+	
 	else if(rg_wrt_enable)begin
 		registers[rg_wrt_dest] = rg_wrt_data;
 	end

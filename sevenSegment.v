@@ -13,6 +13,13 @@ always@(number)begin
 	7: bits = 7'b1111000;
 	8: bits = 7'b0000000;
 	9: bits = 7'b0010000;
+	10: bits = 7'b0001000;
+	11: bits = 7'b0000011;
+	12: bits = 7'b1000110;
+	13: bits = 7'b0100001;
+	14: bits = 7'b0000110;
+	15: bits = 7'b0001110;
+	default: bits = 7'b0111111;
 	endcase
 end
 endmodule

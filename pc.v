@@ -7,7 +7,7 @@ always@(posedge clk,posedge rst)begin
 	if(rst)begin
 		counter=0;
 	end
-	else if(~load) begin
+	else if(load) begin
 		counter=in;
 	end
 end
