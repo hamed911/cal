@@ -6,7 +6,8 @@ input [3:0] ex_opcode,mem_opcode;
 output[1:0] ALUsel1,ALUsel2;
 output stall;
 
-assign ALUsel1 = (forward_en==0)?0: (((reg1!=0)&& (reg1==mem_reg))?1:((reg1!=0)&&(reg1==wb_reg))?2:0)	;
+assign ALUsel1 = (forward_en==0)?0: (((reg1!=0)&& (reg1==mem_reg))?1:(((reg1!=0)&&(reg1==wb_reg))?2:0))	;
 assign ALUsel2 = (forward_en==0)?0: ( ((ex_opcode>=1 && ex_opcode<=8)||ex_opcode==11)?(((reg2!=0)&& (reg2==mem_reg&&wb_mem==1))?1:((reg2!=0)&&(reg2==wb_reg&&wb_wb==1))?2:0):0);
-assign stall = (forward_en==0)?0: (mem_opcode==10&&(ALUsel1!=0||ALUsel2!=0))?1:0;	
+assign stall = (forward_en==0)?0: (((ex_opcode==10&&mem_opcode==11)||(mem_opcode==10)||(ex_opcode==10&&mem_opcode==10))&&(ALUsel1!=0||ALUsel2!=0))?1:0;	
+
 endmodule

@@ -19,7 +19,7 @@ assign rg_rd_data1 = registers[rg_rd_add1];
 assign rg_rd_data2 = registers[rg_rd_add2];
 assign monitor_data = registers[monitor_addr];
 
-always@(posedge clk,posedge rst)begin
+always@(negedge clk)begin
 	if(rst) begin
 		/*registers [1] = 1;
 		registers [2] = 2;

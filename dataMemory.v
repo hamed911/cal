@@ -8,11 +8,9 @@ reg [15:0] memory [63:0];
 assign rdata = memory[addr];
 assign monitor_data = memory[monitor_addr];
 always@(negedge clk) begin
-	/*if(rst==1) begin
-		memory[0] =1;
-		memory[5] =4;
-		memory[10] =-4;
-	end*/
+	//if(rst==1) begin
+	//	memory[5] =4;
+	//end
 	if(w_en)memory[addr] = wdata;
 end
 endmodule
