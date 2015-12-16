@@ -12,7 +12,7 @@ output [7:0] LEDG;
 output [6:0] HEX0,HEX1,HEX2,HEX3,HEX4,HEX5,HEX6,HEX7;
 wire pc_sel,reg2sel,alu_src,mem_write_en,mem_to_reg,enable2,enableBase;
 wire [15:0] out_src1,out_src2,pc_out,pc_in,adder_out,sign_ex_out,branch_offset,monitor_regFile,aluIn2,mem_out,write_back_data;
-wire [15:0] inst_out,inst_out_reg,rg_rd_data1,rg_rd_data2,alu_out,rg_wrt_data,branch_stall,monitor_mem;
+wire [15:0] inst_out,inst_out_reg,rg_rd_data1,rg_rd_data2,alu_out,rg_wrt_data,branch_stall,monitor_cache;
 wire [2:0] alu_com,rg_wrt_dest,reg2src;
 wire [67:0] id_ex_reg_out,id_ex_input;
 wire [41:0] ex_mem_reg_out,ex_mem_input;
@@ -49,9 +49,15 @@ register ex_mem(clk,rst,~ready,ex_mem_input&{42{~memory_stall}},ex_mem_reg_out);
 //////Execute
 //dataMemory mem(clk,rst,ex_mem_reg_out[11:4],ex_mem_reg_out[35:20],ex_mem_reg_out[36],mem_out,
 //							SW[14:11],monitor_mem);
-SRAM_controller mem_ctrl(clk,rst,ex_mem_reg_out[41:38],{2'b00,ex_mem_reg_out[19:4]},ex_mem_reg_out[35:20],ex_mem_reg_out[36],SRAM_DQ,
+
+/*SRAM_controller mem_ctrl(clk,rst,ex_mem_reg_out[41:38],{2'b00,ex_mem_reg_out[19:4]},ex_mem_reg_out[35:20],ex_mem_reg_out[36],SRAM_DQ,
 					mem_out,ready,SRAM_ADDR,
 					SRAM_UB_N_O,SRAM_LB_N_O,SRAM_WE_N_O,SRAM_CE_N_O,SRAM_OE_N_O);
+*/
+
+cache_controller(clk,rst,ready,ex_mem_reg_out[19:4],ex_mem_reg_out[36],mem_out,{2'b00,ex_mem_reg_out[19:4]},ex_mem_reg_out[35:20],
+		ex_mem_reg_out[41:38],SRAM_DQ,SRAM_ADDR,SRAM_UB_N_O,SRAM_LB_N_O,SRAM_WE_N_O,SRAM_CE_N_O,SRAM_OE_N_O,SW[14:11],monitor_cache);
+
 register mem_wb(clk,rst,1,{ex_mem_reg_out[37],mem_out,ex_mem_reg_out[19:0]}&{37{~ready}},mem_wb_reg_out);
 /////mem
 MUX wb_mux(mem_wb_reg_out[36],mem_wb_reg_out[35:20],mem_wb_reg_out[19:4],write_back_data);
@@ -65,8 +71,9 @@ assign enableBase = (SW[0]==1?enable2:reg_enable)& ~ready;
 
 assign LEDR[17] = enable2;
 assign LEDR[16] = memory_stall;
-assign LEDR[15:0]= monitor_regFile;
-assign LEDG[1:0] = ALUsel1;
+//assign LEDR[15:0]= monitor_regFile;
+assign LEDR[15:0]= monitor_cache;
+assign LEDG[0] = ready;
 assign LEDG[3:2] = ALUsel2;
 assign LEDG[4] = id_ex_reg_out[55];
 assign LEDG[5] = ex_mem_reg_out[36];
@@ -83,7 +90,7 @@ sevenSegment s7(out_src1[3:0],HEX2);//aluIn1
 sevenSegment s5(aluIn2[3:0],HEX1);//aluIn2
 sevenSegment s6(id_ex_reg_out[67:64],HEX0);//ex-opcode
 sevenSegment s4(monitor_regFile[3:0],HEX7);//regfile
-sevenSegment s8(ex_mem_reg_out[41:38],HEX6);//memory
+sevenSegment s8(ex_mem_reg_out[41:38],HEX6);//cache
 
 
 assign rst = ~KEY[3];

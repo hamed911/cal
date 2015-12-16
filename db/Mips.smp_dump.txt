@@ -1,5 +1,5 @@
 
-State Machine - |Mips|SRAM_controller:mem_ctrl|ps
+State Machine - |Mips|cache_controller:comb_250|SRAM_controller:sram|ps
 Name ps.s3 ps.s2 ps.s1 ps.wa8 ps.s4 
 ps.wa8 0 0 0 0 0 
 ps.s1 0 0 1 1 0 

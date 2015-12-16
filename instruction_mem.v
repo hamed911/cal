@@ -19,18 +19,18 @@ always@(pc_out)begin
 		1: instr_out=16'b0001_110_011_001_000;// add
 		2: instr_out=16'b0010_101_110_010_000;// sub
 		3: instr_out=16'b0111_111_011_001_000;// sr*/
-		/*
+		
 		0: instr_out=16'b1001011000111100; // Adi R3 = -4
 		1 : instr_out=16'b1001001000001111; // addi r1 = 15
-		2 : instr_out=16'b1011011001111011; // ST  Mem(R1-5 = 10) <- R3 = -4
-		3 : instr_out=16'b1010111011001110; // Ld  R7 <- Mem(14 + R3 = 10) = -4
-		4 : instr_out=16'b1010110111001110; // Ld  R6 <- Mem(14 + R7 = 4) = -4
+		2 : instr_out=16'b1011_011_001_111011; // ST  Mem(R1-5 = 10) <- R3 = -4
+		3 : instr_out=16'b1010_111_011_001110; // Ld  R7 <- Mem(14 + R3 = 10) = -4
+		4 : instr_out=16'b1010110111001110; // Ld  R6 <- Mem(14 + R7 = 10) = -4
 		5 : instr_out=16'b0001011110111000; // Add R3 = R6 + R7 = -8
-		6 : instr_out=16'b1011011110000100; // ST  Mem(R6 + 4 = 0) <- R3 = -8
-		7 : instr_out=16'b1010001000000000; // Ld  R1 <- Mem(0 + R0 = 0) = -8
-		*/
+		//6 : instr_out=16'b1011011110000100; // ST  Mem( R6 + 4 = 0) <- R3 = -8
+		//7 : instr_out=16'b1010001000000000; // Ld  R1 <-Mem(0 + R0 = 0) = -8
 		
 		
+		/*
 		0 : instr_out=16'b1001001000000101; // addi r1 = 5	
 		1 : instr_out=16'b1001010000111011; // addi r2 = -5	
 		2 : instr_out=16'b1001011010001111; // addi r3 = R2 +15 = 10
@@ -72,7 +72,7 @@ always@(pc_out)begin
 		38 : instr_out=16'b1100000001111011; // BR  R1 , -5 , NOT 
 		39 : instr_out=16'b1100000000111111; // BR  R0 , -1 , YES	
 		//[40..255] : instr_out=16'b0000000000000000;
-		
+		*/
 		
 		default: instr_out=0;
 	endcase
