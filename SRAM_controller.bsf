@@ -122,6 +122,13 @@ applicable agreement for further details.
 		(line (pt 304 160)(pt 288 160)(line_width 1))
 	)
 	(port
+		(pt 304 176)
+		(output)
+		(text "monitor_data[2..0]" (rect 0 0 71 12)(font "Arial" ))
+		(text "monitor_data[2..0]" (rect 212 171 283 183)(font "Arial" ))
+		(line (pt 304 176)(pt 288 176)(line_width 3))
+	)
+	(port
 		(pt 304 32)
 		(bidir)
 		(text "SRAM_data[15..0]" (rect 0 0 76 12)(font "Arial" ))
